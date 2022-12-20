@@ -1,0 +1,63 @@
+@import './base.css';
+
+#app {
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+  width: 100%;
+
+  height: 100vh;
+  overflow: scroll;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+  min-height: calc(100vh - 216px);
+}
+
+section .content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-width: 1280px;
+  padding: 2rem;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 4rem;
+  top: -10px;
+}
+
+p {
+  margin: 12px 0;
+}
+
+a {
+  color: var(--color-links);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--color-links);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+  section {
+    min-height: calc(100vh - 128px);
+  }
+  section .content {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+}
