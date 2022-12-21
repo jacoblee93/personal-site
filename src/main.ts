@@ -5,22 +5,6 @@ import './assets/main.css'
 
 const app = createApp(App)
 
-app.provide('getTransitionEndName', ():string => {
-  let t;
-  let el = document.createElement('detector');
-  let transitions = {
-    'transition':'transitionend',
-    'OTransition':'oTransitionEnd',
-    'MozTransition':'transitionend',
-    'WebkitTransition':'webkitTransitionEnd'
-  }
-  for (t in transitions) {
-    if (el.style[t] !== undefined) {
-      return transitions[t];
-    }
-  }
-});
-
 app.provide('isInViewport', (el:HTMLElement, fullyVisible:boolean = false):boolean => {
   const rect = el.getBoundingClientRect();
   const elBottom = fullyVisible ? rect.bottom : rect.bottom - rect.height;

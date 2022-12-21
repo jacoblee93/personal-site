@@ -5,7 +5,7 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: #3A3238;
+  --color-background: #2E3450;
   /* --color-background: #2E3B51; */
   /* --color-background: #2E2F2F; */
   --color-background-soft: var(--vt-c-black-soft);

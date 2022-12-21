@@ -4,18 +4,31 @@ import PuzzlePiece from './PuzzlePiece.vue';
 
 const props = defineProps<{
   imageUrl: string,
+  sideLength?: number,
   shuffleMoves?: number
 }>();
+
 const emit = defineEmits(['animationComplete']);
 
-const sideLength = 4;
-const shuffleMoves = props.shuffleMoves || 30;
-const emptySpaceTile = 15;
+type PieceMove = {
+  tile: number,
+  tileIndex: number,
+  direction: string
+};
+
+type ShuffledState = {
+  moves: PieceMove[];
+  boardState: number[]
+};
+
+let solved = false;
+
+const sideLength = props.sideLength || 4;
 
 const puzzleImage = new Image();
 puzzleImage.src = props.imageUrl;
 
-const puzzlePieces:PuzzlePiece[] = [];
+let puzzlePieces:PuzzlePiece[] = Array(sideLength * sideLength);
 
 const setPuzzlePieceRefs = (el:PuzzlePiece) => {
   if (!el) {
@@ -24,10 +37,12 @@ const setPuzzlePieceRefs = (el:PuzzlePiece) => {
   puzzlePieces[el.index] = el;
 };
 
-const shufflePuzzle = () => {
-  let moves = [];
+const shuffle = (moveCount?:number):ShuffledState|undefined => {
+  let moves:PieceMove[] = [];
   let boardStates:number[][] = [[...Array(sideLength * sideLength).keys()]];
-  let emptySpaceTileIndex = 15;
+  const emptySpaceTile = sideLength * sideLength - 1;
+  const shuffleMoves = moveCount || Math.pow(sideLength - 1, 3);
+  let emptySpaceTileIndex = sideLength * sideLength - 1;
   for (let i = 0; i < shuffleMoves; i++) {
     let availableMoves:{tile: number, tileIndex: number, direction: string}[] = [];
     let emptySpaceX = emptySpaceTileIndex % sideLength;
@@ -62,7 +77,7 @@ const shufflePuzzle = () => {
       });
     }
     let identicalState:number[] | undefined;
-    let nextMove:{tile: number, tileIndex: number, direction: string};
+    let nextMove:PieceMove;
     let newBoardState:number[];
     do {
       nextMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
@@ -84,36 +99,18 @@ const shufflePuzzle = () => {
     boardStates.push(newBoardState);
     moves.push(nextMove);
   }
+  solved = false;
   return {
     moves: moves,
     boardState: boardStates[boardStates.length - 1]
   };
 };
 
-onMounted(() => {
-  puzzleImage.onload = () => {
-    const pieceWidth = puzzleImage.width / sideLength;
-    const pieceHeight = puzzleImage.height / sideLength;
-    for (let x = 0; x < sideLength; x++) {
-      for (let y = 0; y < sideLength; y++) {
-        const canvas = document.createElement('canvas');
-        canvas.width = pieceWidth;
-        canvas.height = pieceHeight;
-        let context = canvas.getContext('2d');
-        if (context) {
-          context.drawImage(puzzleImage, x * pieceWidth, y * pieceHeight, pieceWidth, pieceHeight, 0, 0, canvas.width, canvas.height);
-        }
-        puzzlePieces[y * sideLength + x].setDataURL(canvas.toDataURL());
-      }
-    }
-  };
-  const shuffledState = shufflePuzzle();
-  if (!shuffledState) {
-    return;
-  }
+const solve = (shuffledState:ShuffledState) => {
+  const emptySpaceTile = sideLength * sideLength - 1;
   for (let i = 0; i < puzzlePieces.length; i++) {
     if (shuffledState.boardState[i] === emptySpaceTile) {
-      puzzlePieces[shuffledState.boardState[i]].setPosition(3, 3);
+      puzzlePieces[shuffledState.boardState[i]].setPosition(sideLength - 1, sideLength - 1);
     } else {
       puzzlePieces[shuffledState.boardState[i]].setPosition(i % sideLength, Math.floor(i / sideLength));
     }
@@ -143,7 +140,52 @@ onMounted(() => {
       return puzzlePiece.comeTogether();
     }));
     emit('animationComplete');
+    solved = true;
   }, 500);
+}
+
+const drawPieceImages = () => {
+  const pieceWidth = puzzleImage.width / sideLength;
+  const pieceHeight = puzzleImage.height / sideLength;
+  for (let x = 0; x < sideLength; x++) {
+    for (let y = 0; y < sideLength; y++) {
+      const canvas = document.createElement('canvas');
+      canvas.width = pieceWidth;
+      canvas.height = pieceHeight;
+      let context = canvas.getContext('2d');
+      if (context) {
+        context.drawImage(puzzleImage, x * pieceWidth, y * pieceHeight, pieceWidth, pieceHeight, 0, 0, canvas.width, canvas.height);
+      }
+      puzzlePieces[y * sideLength + x].setDataURL(canvas.toDataURL());
+    }
+  }
+};
+
+const render = () => {
+  for (let i = 0; i < puzzlePieces.length; i++) {
+    puzzlePieces[i].reset();
+  }
+  puzzleImage.onload = () => {
+    drawPieceImages();
+  };
+  const shuffledState = shuffle();
+  if (!shuffledState) {
+    return;
+  }
+  solve(shuffledState);
+};
+
+const isSolved = () => {
+  return solved;
+}
+
+onMounted(() => {
+  render();
+});
+
+defineExpose({
+  isSolved,
+  render
 });
 
 </script>
@@ -154,7 +196,7 @@ onMounted(() => {
       <PuzzlePiece v-for="x in sideLength" :key="x" :ref="setPuzzlePieceRefs"
         :index="(y - 1) * sideLength + (x - 1)"
         :sideLength="sideLength"
-        :emptySpace="((y - 1) * sideLength + (x - 1)) === (sideLength * sideLength - 1)"
+        :isEmptySpace="((y - 1) * sideLength + (x - 1)) === (sideLength * sideLength - 1)"
         />
     </div>
   </div>
@@ -164,12 +206,12 @@ onMounted(() => {
 .puzzle-wrapper {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   max-width: 480px;
   max-height: 480px;
   margin: 8px;
   position: relative;
   bottom: 8px;
+  user-select: none;
 }
 .puzzle-row {
   display: flex;

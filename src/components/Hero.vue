@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, createApp, h } from 'vue';
 import Puzzle from './Puzzle.vue'
 
 const secondary = ref<HTMLElement | null>(null);
@@ -8,17 +8,91 @@ const showSecondaryTitle = () => {
   secondary.value?.classList.remove('hidden');
 };
 
+const mainHeaders = ref<HTMLElement | null>(null);
+const puzzleContainer = ref<HTMLElement | null>(null);
+const secretPuzzleContainer = ref<HTMLElement | null>(null);
+
+const puzzle = ref<Puzzle | null>(null);
+
+let dynamicPuzzleApp = null;
+let secretDynamicPuzzleApp = null;
+
+const puzzleData = [{
+  sideLength: 4,
+  imageUrl: '/src/assets/static/headshot_square.jpg'
+}, {
+  sideLength: 5,
+  imageUrl: '/src/assets/static/headshot_square.jpg'
+}, {
+  sideLength: 6,
+  imageUrl: '/src/assets/static/headshot_square.jpg'
+}, {
+  sideLength: 8,
+  imageUrl: '/src/assets/static/plsstahp.jpg'
+}, {
+  sideLength: 12,
+  imageUrl: '/src/assets/static/finalcat.jpg',
+  secretImageUrl: '/src/assets/static/finalwomen.jpg'
+}];
+let sideLengthIndex = 0;
+
+const moar = () => {
+  if (puzzle.value?.isSolved() && mainHeaders.value && puzzleContainer.value && secretPuzzleContainer.value) {
+    if (dynamicPuzzleApp) {
+      dynamicPuzzleApp.unmount();
+    }
+    if (secretDynamicPuzzleApp) {
+      secretDynamicPuzzleApp.unmount();
+    }
+    sideLengthIndex = (sideLengthIndex + 1) % puzzleData.length;
+    let selectedPuzzleData = puzzleData[sideLengthIndex];
+    window.requestAnimationFrame(() => {
+      if (selectedPuzzleData.secretImageUrl) {
+        mainHeaders.value.classList.add('hidden');
+        secretPuzzleContainer.value.classList.remove('hidden');
+        secretDynamicPuzzleApp = createApp({
+          setup () {
+            return () => h(Puzzle, {
+              sideLength: selectedPuzzleData.sideLength,
+              imageUrl: selectedPuzzleData.secretImageUrl,
+              onMouseup: moar
+            });
+          }
+        });
+        secretDynamicPuzzleApp.mount(secretPuzzleContainer.value);
+      } else {
+        mainHeaders.value.classList.remove('hidden');
+        secretPuzzleContainer.value.classList.add('hidden');
+      }
+      dynamicPuzzleApp = createApp({
+        setup () {
+          return () => h(Puzzle, {
+            sideLength: selectedPuzzleData.sideLength,
+            imageUrl: selectedPuzzleData.imageUrl,
+            onMouseup: moar
+          });
+        }
+      });
+      dynamicPuzzleApp.mount(puzzleContainer.value);
+    });
+  }
+};
+
 </script>
 
 <template>
   <section class="hero">
-    <div class="content">
-      <div class="main-headers">
+    <div ref="content" class="content">
+      <div ref="mainHeaders" class="main-headers">
         <h1>Jacob Lee</h1>
         <h3>Fractional CTO</h3>
         <h3 ref="secondary" class="secondary-title hidden">&amp; Problem Solver</h3>
       </div>
-      <Puzzle imageUrl="/src/assets/static/headshot_square.jpg" @animationComplete="showSecondaryTitle" />
+      <div class="puzzle-container secret hidden" ref="secretPuzzleContainer">
+      </div>
+      <div class="puzzle-container" ref="puzzleContainer">
+        <Puzzle ref="puzzle" imageUrl="/src/assets/static/headshot_square.jpg" @animationComplete="showSecondaryTitle" @mouseup="moar"/>
+      </div>
     </div>
   </section>
 </template>
@@ -51,9 +125,26 @@ h3 {
   opacity: 0;
 }
 
+.puzzle-container {
+  width: 480px;
+  max-width: 480px;
+  max-height: 480px;
+}
+
+.puzzle-container.hidden {
+  display: none;
+}
+
+.main-headers.hidden {
+  display: none;
+}
+
 @media (max-width: 960px) {
   .main-headers {
     bottom: 0;
+  }
+  .puzzle-container {
+    width: unset;
   }
 }
 </style>

@@ -9,6 +9,23 @@
     <style> @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap'); </style>
   </head>
   <body>
+    <script>
+      function getTransitionEndName () {
+        let t;
+        let el = document.createElement('detector');
+        let transitions = {
+          'transition':'transitionend',
+          'OTransition':'oTransitionEnd',
+          'MozTransition':'transitionend',
+          'WebkitTransition':'webkitTransitionEnd'
+        }
+        for (t in transitions) {
+          if (el.style[t] !== undefined) {
+            return transitions[t];
+          }
+        }
+      }
+    </script>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

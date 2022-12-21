@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue'
-const getTransitionEndName = inject('getTransitionEndName');
 
 const props = defineProps<{
   sideLength: number,
   index: number,
-  emptySpace: boolean
+  isEmptySpace: boolean
 }>();
 
 let startX = props.index % props.sideLength;
@@ -114,16 +113,22 @@ const enableAnimation = () => {
   if (!pieceImage.value) {
     return;
   }
-  pieceImage.value.classList.add('active');
+  const slideSpeed = .05 * Math.pow(4 / props.sideLength, 2.5);
+  pieceImage.value.style.transition = `transform ${slideSpeed}s`;
 };
 
-onMounted(() => {
+const reset = () => {
   if (!pieceImage.value) {
     return;
   }
-  if (props.emptySpace) {
+  if (props.isEmptySpace) {
     pieceImage.value.style.visibility = 'hidden';
   }
+  pieceImage.value.style.transition = '';
+}
+
+onMounted(() => {
+  reset();
 });
 
 defineExpose({
@@ -132,14 +137,15 @@ defineExpose({
   enableAnimation,
   comeTogether,
   slide,
+  reset,
   index: props.index
 });
 
 </script>
 
 <template>
-  <div class="puzzle-piece active">
-    <img ref="pieceImage">
+  <div class="puzzle-piece">
+    <img ref="pieceImage" />
   </div>
 </template>
 
@@ -153,8 +159,5 @@ defineExpose({
   transform: translate3d(0, 0, 0);
   max-width: 100%;
   padding: 2px;
-}
-.puzzle-piece.active img {
-  transition: transform .05s;
 }
 </style>
