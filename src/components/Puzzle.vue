@@ -8,7 +8,10 @@ const props = defineProps<{
   shuffleMoves?: number
 }>();
 
-const emit = defineEmits(['animationComplete']);
+const emit = defineEmits([
+  'animationComplete',
+  'mouseupAfterSolveCompleted'
+]);
 
 type PieceMove = {
   tile: number,
@@ -177,7 +180,13 @@ const render = () => {
 
 const isSolved = () => {
   return solved;
-}
+};
+
+const mouseupAfterSolveCompleted = () => {
+  if (isSolved()) {
+    emit('mouseupAfterSolveCompleted');
+  }
+};
 
 onMounted(() => {
   render();
@@ -191,7 +200,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="puzzle-wrapper">
+  <div class="puzzle-wrapper" @click="mouseupAfterSolveCompleted">
     <div v-for="y in sideLength" :key="y" class="puzzle-row">
       <PuzzlePiece v-for="x in sideLength" :key="x" :ref="setPuzzlePieceRefs"
         :index="(y - 1) * sideLength + (x - 1)"
