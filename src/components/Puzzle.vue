@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import PuzzlePiece from './PuzzlePiece.vue';
+
+const feather = inject('feather');
 
 const props = defineProps<{
   imageUrl: string,
@@ -10,7 +12,7 @@ const props = defineProps<{
 
 const emit = defineEmits([
   'animationComplete',
-  'mouseupAfterSolveCompleted'
+  'wantsMoar'
 ]);
 
 type PieceMove = {
@@ -31,7 +33,8 @@ const sideLength = props.sideLength || 4;
 const puzzleImage = new Image();
 puzzleImage.src = props.imageUrl;
 
-let puzzlePieces:PuzzlePiece[] = Array(sideLength * sideLength);
+const replay = ref<HTMLElement | null>(null);
+const puzzlePieces:PuzzlePiece[] = Array(sideLength * sideLength);
 
 const setPuzzlePieceRefs = (el:PuzzlePiece) => {
   if (!el) {
@@ -144,6 +147,7 @@ const solve = (shuffledState:ShuffledState) => {
     }));
     emit('animationComplete');
     solved = true;
+    replay.value?.classList.remove('hidden');
   }, 500);
 }
 
@@ -182,9 +186,9 @@ const isSolved = () => {
   return solved;
 };
 
-const mouseupAfterSolveCompleted = () => {
+const wantsMoar = () => {
   if (isSolved()) {
-    emit('mouseupAfterSolveCompleted');
+    emit('wantsMoar');
   }
 };
 
@@ -200,7 +204,9 @@ defineExpose({
 </script>
 
 <template>
-  <div class="puzzle-wrapper" @click="mouseupAfterSolveCompleted">
+  <div ref="puzzle-wrapper" class="puzzle-wrapper">
+    <!-- <i class="replay hidden" data-feather="rotate-ccw"></i> -->
+    <i ref="replay" class="replay hidden" v-html="feather.icons['rotate-ccw'].toSvg()" @mouseup="wantsMoar"></i>
     <div v-for="y in sideLength" :key="y" class="puzzle-row">
       <PuzzlePiece v-for="x in sideLength" :key="x" :ref="setPuzzlePieceRefs"
         :index="(y - 1) * sideLength + (x - 1)"
@@ -225,5 +231,19 @@ defineExpose({
 .puzzle-row {
   display: flex;
   min-height: 0;
+}
+.replay {
+  cursor: pointer;
+  opacity: .5;
+  color: #AAAAAA;
+  position: absolute;
+  z-index: 1;
+  left: 24px;
+  top: 24px;
+  width: 24px;
+  height: 24px;
+}
+.replay.hidden {
+  display: none;
 }
 </style>

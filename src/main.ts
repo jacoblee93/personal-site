@@ -31,4 +31,6 @@ app.provide('isInViewport', (el:HTMLElement, fullyVisible:boolean = false):boole
     elRight <= (window.innerWidth || document.documentElement.clientWidth);
 });
 
+app.provide('feather', feather);
+
 app.mount('#app')

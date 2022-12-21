@@ -3,6 +3,7 @@ import { ref, onMounted, createApp, h, inject } from 'vue';
 import Puzzle from './Puzzle.vue'
 
 const getTransitionEndName = inject('getTransitionEndName');
+const feather = inject('feather');
 
 const secondary = ref<HTMLElement | null>(null);
 
@@ -19,24 +20,24 @@ let secretDynamicPuzzleApp = null;
 
 const puzzleData = [{
   sideLength: 4,
-  imageUrl: '/src/assets/static/headshot_square.jpg'
+  imageUrl: '/src/assets/static/puzzle/headshot_square.jpg'
 }, {
   sideLength: 5,
-  imageUrl: '/src/assets/static/headshot_square.jpg'
+  imageUrl: '/src/assets/static/puzzle/headshot_square.jpg'
 }, {
   sideLength: 6,
-  imageUrl: '/src/assets/static/headshot_square.jpg'
+  imageUrl: '/src/assets/static/puzzle/headshot_square.jpg'
 }, {
   sideLength: 8,
-  imageUrl: '/src/assets/static/plsstahp.jpg'
+  imageUrl: '/src/assets/static/puzzle/plsstahp.jpg'
 }, {
   sideLength: 12,
-  imageUrl: '/src/assets/static/finalcat.jpg',
-  secretImageUrl: '/src/assets/static/finalwomen.jpg'
+  imageUrl: '/src/assets/static/puzzle/finalcat.jpg',
+  secretImageUrl: '/src/assets/static/puzzle/finalwomen.jpg'
 }];
 let sideLengthIndex = 0;
 
-const moar = () => {
+const giveEmMoar = () => {
   if (mainHeaders.value && puzzleContainer.value && secretPuzzleContainer.value) {
     if (dynamicPuzzleApp) {
       dynamicPuzzleApp.unmount();
@@ -48,24 +49,25 @@ const moar = () => {
     let selectedPuzzleData = puzzleData[sideLengthIndex];
     window.requestAnimationFrame(() => {
       if (selectedPuzzleData.secretImageUrl) {
-        mainHeaders.value.classList.add('hidden');
-        secretPuzzleContainer.value.classList.remove('hidden');
+        mainHeaders.value?.classList.add('hidden');
+        secretPuzzleContainer.value?.classList.remove('hidden');
         secretDynamicPuzzleApp = createApp({
           setup () {
             return () => {
               return h(Puzzle, {
                 sideLength: selectedPuzzleData.sideLength,
                 imageUrl: selectedPuzzleData.secretImageUrl,
-                onMouseupAfterSolveCompleted: moar
+                onWantsMoar: giveEmMoar
               });
             }
           }
         });
         secretDynamicPuzzleApp.provide('getTransitionEndName', getTransitionEndName);
+        secretDynamicPuzzleApp.provide('feather', feather);
         secretDynamicPuzzleApp.mount(secretPuzzleContainer.value);
       } else {
-        mainHeaders.value.classList.remove('hidden');
-        secretPuzzleContainer.value.classList.add('hidden');
+        mainHeaders.value?.classList.remove('hidden');
+        secretPuzzleContainer.value?.classList.add('hidden');
       }
       dynamicPuzzleApp = createApp({
         setup () {
@@ -73,12 +75,13 @@ const moar = () => {
             return h(Puzzle, {
               sideLength: selectedPuzzleData.sideLength,
               imageUrl: selectedPuzzleData.imageUrl,
-              onMouseupAfterSolveCompleted: moar
+              onWantsMoar: giveEmMoar
             });
           };
         }
       });
       dynamicPuzzleApp.provide('getTransitionEndName', getTransitionEndName);
+      dynamicPuzzleApp.provide('feather', feather);
       dynamicPuzzleApp.mount(puzzleContainer.value);
     });
   }
@@ -97,7 +100,7 @@ const moar = () => {
       <div class="puzzle-container secret hidden" ref="secretPuzzleContainer">
       </div>
       <div class="puzzle-container" ref="puzzleContainer">
-        <Puzzle ref="puzzle" imageUrl="/src/assets/static/headshot_square.jpg" @animationComplete="showSecondaryTitle" @mouseupAfterSolveCompleted="moar"/>
+        <Puzzle ref="puzzle" imageUrl="/src/assets/static/puzzle/headshot_square.jpg" @animationComplete="showSecondaryTitle" @wantsMoar="giveEmMoar"/>
       </div>
     </div>
   </section>
