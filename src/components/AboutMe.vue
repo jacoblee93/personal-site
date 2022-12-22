@@ -49,10 +49,10 @@ onMounted(() => {
   <section class="about-me">
     <div class="content">
       <div class="pixelme-container" ref="pixelmeContainer">
-        <img class="pixelme typing" ref="pixelmeTyping" src="/src/assets/static/jacob_typing.gif" />
-        <img class="pixelme notbad" ref="pixelmeNotBad" src="/src/assets/static/jacob-not-bad.gif" />
-        <img class="pixelme" src="/src/assets/static/jacob-desk.gif" />
-        <img class="pixelme" src="/src/assets/static/jacob-laptop.gif" />
+        <img class="pixelme typing" ref="pixelmeTyping" src="/static/jacob_typing.gif" />
+        <img class="pixelme notbad" ref="pixelmeNotBad" src="/static/jacob-not-bad.gif" />
+        <img class="pixelme" src="/static/jacob-desk.gif" />
+        <img class="pixelme" src="/static/jacob-laptop.gif" />
       </div>
       <div class="bio">
         <h1>
@@ -61,20 +61,20 @@ onMounted(() => {
         <p class="copy" ref="copy">
           I'm a freelance software engineer and consultant based in San Francisco, CA.
           Most recently, I was the Co-founder and CTO of a software platform called
-          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/src/assets/static/logos/autocode.png" />Autocode</a> used by over 600,000 developers.
+          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a> used by over 600,000 developers.
           Before that, I was a frontend engineer on
-          <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/src/assets/static/logos/google-photos.png" />Google Photos</a>.
+          <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
         <p>
           My strengths are backend development, devops, and cloud architecture, but I consider myself a generalist who enjoys solving problems in every part of the stack.
         </p>
         <p>
           If you could use my expertise or a steady hand on your next project, reach out to me on
-          <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/src/assets/static/logos/linkedin.png" />LinkedIn</a>,
-          <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/src/assets/static/logos/twitter.png" />Twitter</a>,
+          <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
+          <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
           or <a href="">via the email within my resume</a> and let's talk!
         </p>
-        <!-- <img class="minime" ref="minime" src="/src/assets/static/mini-jacob.gif" /> -->
+        <!-- <img class="minime" ref="minime" src="/static/mini-jacob.gif" /> -->
       </div>
     </div>
   </section>

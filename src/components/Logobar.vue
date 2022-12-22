@@ -6,48 +6,48 @@ const logos = ref<HTMLElement[] | null>(null);
 const logobar = ref<HTMLElement | null>(null);
 const logoData = [{
   name: 'ramp',
-  logoUrl: '/src/assets/static/wordmarks/ramp.png',
+  logoUrl: '/static/wordmarks/ramp.png',
   linkUrl: 'https://ramp.com/'
 }, {
   name: 'discord',
-  logoUrl: '/src/assets/static/wordmarks/discord.png',
+  logoUrl: '/static/wordmarks/discord.png',
   linkUrl: 'https://discord.com/'
 }, {
   name: 'thehill',
-  logoUrl: '/src/assets/static/wordmarks/thehill.png',
+  logoUrl: '/static/wordmarks/thehill.png',
   linkUrl: 'https://thehill.com/'
 }, {
   name: 'backbone',
-  logoUrl: '/src/assets/static/wordmarks/backbone.png',
+  logoUrl: '/static/wordmarks/backbone.png',
   linkUrl: 'https://playbackbone.com/'
 }, {
   name: 'webflow',
-  logoUrl: '/src/assets/static/wordmarks/webflow.png',
+  logoUrl: '/static/wordmarks/webflow.png',
   linkUrl: 'https://webflow.com/'
 }, {
   name: 'slack',
-  logoUrl: '/src/assets/static/wordmarks/slack.png',
+  logoUrl: '/static/wordmarks/slack.png',
   linkUrl: 'https://slack.com/fund/'
 }, {
   name: 'shopify',
-  logoUrl: '/src/assets/static/wordmarks/shopify.png',
+  logoUrl: '/static/wordmarks/shopify.png',
   linkUrl: 'https://shopify.com/'
 }, {
   name: 'stripe',
-  logoUrl: '/src/assets/static/wordmarks/stripe.png',
+  logoUrl: '/static/wordmarks/stripe.png',
   linkUrl: 'https://stripe.com/'
 }, {
   name: 'customer-io',
-  logoUrl: '/src/assets/static/wordmarks/customer-io.png',
+  logoUrl: '/static/wordmarks/customer-io.png',
   linkUrl: 'https://customer.io/'
 }, {
   name: 'blueyard',
-  logoUrl: '/src/assets/static/wordmarks/blueyard.svg',
+  logoUrl: '/static/wordmarks/blueyard.svg',
   linkUrl: 'https://blueyard.com/',
   imgClasses: 'blueyard'
 }, {
   name: 'nylas',
-  logoUrl: '/src/assets/static/wordmarks/nylas.png',
+  logoUrl: '/static/wordmarks/nylas.png',
   linkUrl: 'https://nylas.com/'
 }];
 

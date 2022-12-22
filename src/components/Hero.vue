@@ -21,20 +21,20 @@ let secretDynamicPuzzleApp: Application | null = null;
 
 const puzzleData = [{
   sideLength: 4,
-  imageUrl: '/src/assets/static/puzzle/headshot_square.jpg'
+  imageUrl: '/static/puzzle/headshot_square.jpg'
 }, {
   sideLength: 5,
-  imageUrl: '/src/assets/static/puzzle/headshot_square.jpg'
+  imageUrl: '/static/puzzle/headshot_square.jpg'
 }, {
   sideLength: 6,
-  imageUrl: '/src/assets/static/puzzle/headshot_square.jpg'
+  imageUrl: '/static/puzzle/headshot_square.jpg'
 }, {
   sideLength: 8,
-  imageUrl: '/src/assets/static/puzzle/plsstahp.jpg'
+  imageUrl: '/static/puzzle/plsstahp.jpg'
 }, {
   sideLength: 12,
-  imageUrl: '/src/assets/static/puzzle/finalcat.jpg',
-  secretImageUrl: '/src/assets/static/puzzle/finalwomen.jpg'
+  imageUrl: '/static/puzzle/finalcat.jpg',
+  secretImageUrl: '/static/puzzle/finalwomen.jpg'
 }];
 let sideLengthIndex = 0;
 
@@ -102,7 +102,7 @@ const giveEmMoar = () => {
       <div class="puzzle-container secret hidden" ref="secretPuzzleContainer">
       </div>
       <div class="puzzle-container" ref="puzzleContainer">
-        <Puzzle ref="puzzle" imageUrl="/src/assets/static/puzzle/headshot_square.jpg" @animationComplete="showSecondaryTitle" @wantsMoar="giveEmMoar"/>
+        <Puzzle ref="puzzle" imageUrl="/static/puzzle/headshot_square.jpg" @animationComplete="showSecondaryTitle" @wantsMoar="giveEmMoar"/>
       </div>
     </div>
   </section>
