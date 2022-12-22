@@ -32,7 +32,7 @@ const puzzleData = [{
   sideLength: 8,
   imageUrl: '/static/puzzle/plsstahp.jpg'
 }, {
-  sideLength: 12,
+  sideLength: 10,
   imageUrl: '/static/puzzle/finalcat.jpg',
   secretImageUrl: '/static/puzzle/finalwomen.jpg'
 }];

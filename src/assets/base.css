@@ -26,6 +26,10 @@
   font-weight: normal;
 }
 
+html, body {
+  overscroll-behavior-y: none;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
