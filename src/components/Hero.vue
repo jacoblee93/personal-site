@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted, createApp, h, inject } from 'vue';
+import type { App as Application } from 'vue';
 import Puzzle from './Puzzle.vue'
 
-const getTransitionEndName = inject('getTransitionEndName');
+const getTransitionEndName = inject('getTransitionEndName') as () => string;
 const feather = inject('feather');
 
 const secondary = ref<HTMLElement | null>(null);
@@ -15,8 +16,8 @@ const mainHeaders = ref<HTMLElement | null>(null);
 const puzzleContainer = ref<HTMLElement | null>(null);
 const secretPuzzleContainer = ref<HTMLElement | null>(null);
 
-let dynamicPuzzleApp = null;
-let secretDynamicPuzzleApp = null;
+let dynamicPuzzleApp: Application | null = null;
+let secretDynamicPuzzleApp: Application | null = null;
 
 const puzzleData = [{
   sideLength: 4,
@@ -38,22 +39,23 @@ const puzzleData = [{
 let sideLengthIndex = 0;
 
 const giveEmMoar = () => {
-  if (mainHeaders.value && puzzleContainer.value && secretPuzzleContainer.value) {
-    if (dynamicPuzzleApp) {
-      dynamicPuzzleApp.unmount();
-    }
-    if (secretDynamicPuzzleApp) {
-      secretDynamicPuzzleApp.unmount();
-    }
-    sideLengthIndex = (sideLengthIndex + 1) % puzzleData.length;
-    let selectedPuzzleData = puzzleData[sideLengthIndex];
-    window.requestAnimationFrame(() => {
+  if (dynamicPuzzleApp) {
+    dynamicPuzzleApp.unmount();
+  }
+  if (secretDynamicPuzzleApp) {
+    secretDynamicPuzzleApp.unmount();
+  }
+  sideLengthIndex = (sideLengthIndex + 1) % puzzleData.length;
+  let selectedPuzzleData = puzzleData[sideLengthIndex];
+  window.requestAnimationFrame(() => {
+    if (mainHeaders.value && puzzleContainer.value && secretPuzzleContainer.value) {
       if (selectedPuzzleData.secretImageUrl) {
         mainHeaders.value?.classList.add('hidden');
         secretPuzzleContainer.value?.classList.remove('hidden');
         secretDynamicPuzzleApp = createApp({
           setup () {
             return () => {
+              // @ts-ignore
               return h(Puzzle, {
                 sideLength: selectedPuzzleData.sideLength,
                 imageUrl: selectedPuzzleData.secretImageUrl,
@@ -83,8 +85,8 @@ const giveEmMoar = () => {
       dynamicPuzzleApp.provide('getTransitionEndName', getTransitionEndName);
       dynamicPuzzleApp.provide('feather', feather);
       dynamicPuzzleApp.mount(puzzleContainer.value);
-    });
-  }
+    }
+  });
 };
 
 </script>

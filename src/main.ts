@@ -6,22 +6,26 @@ import './assets/main.css'
 const app = createApp(App)
 
 app.provide('getTransitionEndName', ():string => {
-  let t;
-  let el = document.createElement('detector');
-  let transitions = {
-    'transition':'transitionend',
-    'OTransition':'oTransitionEnd',
-    'MozTransition':'transitionend',
-    'WebkitTransition':'webkitTransitionEnd'
+  type TransitionsObject = {
+    [index: string]: string;
   }
-  for (t in transitions) {
-    if (el.style[t] !== undefined) {
+  const el = document.createElement('detector');
+  const transitions: TransitionsObject = {
+    'transition': 'transitionend',
+    'OTransition': 'oTransitionEnd',
+    'MozTransition': 'transitionend',
+    'WebkitTransition': 'webkitTransitionEnd'
+  }
+  for (let t in transitions) {
+    // @ts-ignore
+    if (el.style[t]) {
       return transitions[t];
     }
   }
+  return 'transitionend';
 });
 
-app.provide('isInViewport', (el:HTMLElement, fullyVisible:boolean = false):boolean => {
+app.provide('isInViewport', (el:HTMLElement, fullyVisible?:boolean):boolean => {
   const rect = el.getBoundingClientRect();
   const elBottom = fullyVisible ? rect.bottom : rect.bottom - rect.height;
   const elRight = fullyVisible ? rect.right : rect.right - rect.width;
@@ -31,6 +35,7 @@ app.provide('isInViewport', (el:HTMLElement, fullyVisible:boolean = false):boole
     elRight <= (window.innerWidth || document.documentElement.clientWidth);
 });
 
+// @ts-ignore
 app.provide('feather', feather);
 
 app.mount('#app')

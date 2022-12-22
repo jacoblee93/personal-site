@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue'
-const getTransitionEndName = inject('getTransitionEndName');
+const getTransitionEndName = inject('getTransitionEndName') as () => string;
 
 const props = defineProps<{
   sideLength: number,

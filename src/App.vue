@@ -24,7 +24,6 @@ onMounted(() => {
   }
   appEl.addEventListener('scroll', styleNavbar);
   styleNavbar();
-  feather.replace();
 });
 
 </script>

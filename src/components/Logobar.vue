@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
-const isInViewport = inject('isInViewport');
+const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:boolean) => boolean;
 
 const logos = ref<HTMLElement[] | null>(null);
 const logobar = ref<HTMLElement | null>(null);

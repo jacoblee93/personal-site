@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
+import type { Ref } from 'vue';
 import PuzzlePiece from './PuzzlePiece.vue';
 
 const feather = inject('feather');
@@ -34,9 +35,10 @@ const puzzleImage = new Image();
 puzzleImage.src = props.imageUrl;
 
 const replay = ref<HTMLElement | null>(null);
-const puzzlePieces:PuzzlePiece[] = Array(sideLength * sideLength);
+const puzzlePieces: typeof PuzzlePiece[] = Array(sideLength * sideLength);
 
-const setPuzzlePieceRefs = (el:PuzzlePiece) => {
+// @ts-ignore
+const setPuzzlePieceRefs = (el) => {
   if (!el) {
     return;
   }
@@ -205,8 +207,10 @@ defineExpose({
 
 <template>
   <div ref="puzzle-wrapper" class="puzzle-wrapper">
-    <!-- <i class="replay hidden" data-feather="rotate-ccw"></i> -->
-    <i ref="replay" class="replay hidden" v-html="feather.icons['rotate-ccw'].toSvg()" @mouseup="wantsMoar"></i>
+    <i ref="replay" class="replay hidden" v-html="
+      // @ts-ignore
+      feather.icons['rotate-ccw'].toSvg()
+    " @mouseup="wantsMoar"></i>
     <div v-for="y in sideLength" :key="y" class="puzzle-row">
       <PuzzlePiece v-for="x in sideLength" :key="x" :ref="setPuzzlePieceRefs"
         :index="(y - 1) * sideLength + (x - 1)"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
-const isInViewport = inject('isInViewport');
+const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:boolean) => boolean;
 const minime = ref<HTMLElement | null>(null);
 const pixelmeTyping = ref<HTMLElement | null>(null);
 const pixelmeNotBad = ref<HTMLElement | null>(null);
