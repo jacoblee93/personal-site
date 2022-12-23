@@ -187,7 +187,7 @@ const render = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       solve(shuffledState).then(resolve);
-    }, 500);
+    }, 200);
   });
 };
 
