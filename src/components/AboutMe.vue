@@ -51,14 +51,20 @@ onMounted(() => {
           👋 Nice to meet you!
         </h1>
         <p class="copy" ref="copy">
-          I'm a freelance software engineer and consultant based in San Francisco, CA.
-          Most recently, I was the Co-founder and CTO of a software platform called
-          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a> used by over 600,000 developers.
-          Before that, I was a frontend engineer on
+          I'm a freelance engineer and consultant based in San Francisco.
+          Most recently, I was the Co-founder and CTO of
+          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, a software platform used by over <b>600,000 developers</b>, many of whom were first-time coders.
+        </p>
+        <p>
+          I've architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections and have solved problems around everything from TLS certificate provisioning to real-time text sync.
+        </p>
+        <p>
+          Before that, I helped launch shared albums and as a frontend engineer on
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
         <p>
-          My strengths are backend development, devops, and cloud architecture, but I consider myself a generalist who enjoys solving problems in every part of the stack.
+          My strengths are backend development, devops, and cloud architecture, but I consider myself "<a href="https://en.wikipedia.org/wiki/T-shaped_skills" target="_blank">t-shaped</a>" and embrace the challenge of solving problems anywhere in a stack and a company.
+          I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>, and know my way around a cap table.
         </p>
         <p>
           If you could use my expertise or a steady hand on your next project, reach out to me on
@@ -87,7 +93,7 @@ onMounted(() => {
   justify-content: center;
   height: calc(100% - 108px);
   position: relative;
-  bottom: 32px;
+  bottom: 48px;
   min-height: 512px;
   min-width: 420px;
   flex-shrink: 0;
