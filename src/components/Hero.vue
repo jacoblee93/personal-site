@@ -134,7 +134,7 @@ h3 {
 }
 
 .secondary-title.hidden {
-  opacity: 0;
+  opacity: .15;
 }
 
 .puzzle-container {
