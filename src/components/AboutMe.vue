@@ -18,11 +18,13 @@ onMounted(() => {
   //   minime.value.style.objectPosition = `-${180 * minimePosition}px 0`;
   //   minimePosition = (minimePosition + 1) % minimeFrames;
   // }, 1000);
-  if (!pixelmeTyping.value || !pixelmeNotBad.value) {
-    return;
-  }
-  pixelmeTyping.value.style.display = 'block';
-  pixelmeNotBad.value.style.display = 'none';
+  window.requestAnimationFrame(() => {
+    if (!pixelmeTyping.value || !pixelmeNotBad.value) {
+      return;
+    }
+    pixelmeTyping.value.style.display = 'block';
+    pixelmeNotBad.value.style.display = 'none';
+  });
   const appEl = document.querySelector('#app');
   if (!appEl) {
     return;
@@ -31,11 +33,13 @@ onMounted(() => {
     if (copy.value && isInViewport(copy.value, true)) {
       appEl.removeEventListener('scroll', typingCheck);
       setTimeout(() => {
-        if (!pixelmeTyping.value || !pixelmeNotBad.value) {
-          return;
-        }
-        pixelmeTyping.value.style.display = 'none';
-        pixelmeNotBad.value.style.display = 'block';
+        window.requestAnimationFrame(() => {
+          if (!pixelmeTyping.value || !pixelmeNotBad.value) {
+            return;
+          }
+          pixelmeTyping.value.style.display = 'none';
+          pixelmeNotBad.value.style.display = 'block';
+        });
       }, 3000);
     }
   }
