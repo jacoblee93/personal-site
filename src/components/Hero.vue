@@ -138,6 +138,7 @@ h3 {
 }
 
 .puzzle-container {
+  flex-basis: 50%;
   max-width: 480px;
   max-height: 480px;
 }
