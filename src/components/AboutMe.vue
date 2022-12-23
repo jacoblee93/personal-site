@@ -2,8 +2,6 @@
 import { ref, onMounted, inject } from 'vue';
 const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:boolean) => boolean;
 const minime = ref<HTMLElement | null>(null);
-const pixelmeTyping = ref<HTMLElement | null>(null);
-const pixelmeNotBad = ref<HTMLElement | null>(null);
 const pixelmeContainer = ref<HTMLElement | null>(null);
 const copy = ref<HTMLElement | null>(null);
 
@@ -18,13 +16,6 @@ onMounted(() => {
   //   minime.value.style.objectPosition = `-${180 * minimePosition}px 0`;
   //   minimePosition = (minimePosition + 1) % minimeFrames;
   // }, 1000);
-  window.requestAnimationFrame(() => {
-    if (!pixelmeTyping.value || !pixelmeNotBad.value) {
-      return;
-    }
-    pixelmeTyping.value.style.display = 'block';
-    pixelmeNotBad.value.style.display = 'none';
-  });
   const appEl = document.querySelector('#app');
   if (!appEl) {
     return;
@@ -33,13 +24,10 @@ onMounted(() => {
     if (copy.value && isInViewport(copy.value, true)) {
       appEl.removeEventListener('scroll', typingCheck);
       setTimeout(() => {
-        window.requestAnimationFrame(() => {
-          if (!pixelmeTyping.value || !pixelmeNotBad.value) {
-            return;
-          }
-          pixelmeTyping.value.style.display = 'none';
-          pixelmeNotBad.value.style.display = 'block';
-        });
+        if (!pixelmeContainer.value) {
+          return;
+        }
+        pixelmeContainer.value.classList.remove('typing');
       }, 3000);
     }
   }
@@ -52,7 +40,7 @@ onMounted(() => {
 <template>
   <section class="about-me">
     <div class="content">
-      <div class="pixelme-container" ref="pixelmeContainer">
+      <div class="pixelme-container typing" ref="pixelmeContainer">
         <img class="pixelme typing" ref="pixelmeTyping" src="/static/jacob_typing.gif" />
         <img class="pixelme notbad" ref="pixelmeNotBad" src="/static/jacob-not-bad.gif" />
         <img class="pixelme" src="/static/jacob-desk.gif" />
@@ -94,9 +82,6 @@ onMounted(() => {
 .pixelme {
   position: absolute;
 }
-.pixelme.notbad {
-  display: none;
-}
 .pixelme-container {
   display: flex;
   justify-content: center;
@@ -113,6 +98,15 @@ onMounted(() => {
   image-rendering: crisp-edges;
   image-rendering: optimizespeed;
   image-rendering: pixelated;
+}
+.pixelme-container .pixelme.typing {
+  opacity: .01;
+}
+.pixelme-container.typing .pixelme.notbad {
+  opacity: .01;
+}
+.pixelme-container.typing .pixelme.typing {
+  opacity: 1;
 }
 img.inline-logo {
   height: 12px;
