@@ -3,7 +3,7 @@ import { ref, onMounted, inject } from 'vue';
 const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:boolean) => boolean;
 const minime = ref<HTMLElement | null>(null);
 const pixelmeContainer = ref<HTMLElement | null>(null);
-const copy = ref<HTMLElement | null>(null);
+const midpointCopy = ref<HTMLElement | null>(null);
 
 const minimeFrames = 6;
 let minimePosition = 0;
@@ -21,7 +21,7 @@ onMounted(() => {
     return;
   }
   const typingCheck = () => {
-    if (copy.value && isInViewport(copy.value, true)) {
+    if (midpointCopy.value && isInViewport(midpointCopy.value, true)) {
       appEl.removeEventListener('scroll', typingCheck);
       setTimeout(() => {
         if (!pixelmeContainer.value) {
@@ -50,7 +50,7 @@ onMounted(() => {
         <h1>
           👋 Nice to meet you!
         </h1>
-        <p class="copy" ref="copy">
+        <p>
           I'm a freelance engineer and consultant based in San Francisco.
           Most recently, I was the Co-founder and CTO of
           <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, a software platform used by over <b>600,000 developers</b>, many of whom were first-time coders.
@@ -62,7 +62,7 @@ onMounted(() => {
           Before that, I helped launch shared albums and as a frontend engineer on
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
-        <p>
+        <p ref="midpointCopy">
           My strengths are backend development, devops, and cloud architecture, but I consider myself "<a href="https://en.wikipedia.org/wiki/T-shaped_skills" target="_blank">t-shaped</a>" and embrace the challenge of solving problems anywhere in a stack and a company.
           I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>, and know my way around a cap table.
         </p>
