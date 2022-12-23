@@ -13,45 +13,71 @@ let startY = Math.floor(props.index / props.sideLength);
 let currentX = startX;
 let currentY = startY;
 
+let animationEnabled = false;
+
 const pieceImage = ref<HTMLInputElement | null>(null);
 
-const setDataURL = (dataURL:string) => {
-  if (pieceImage.value) {
-    pieceImage.value.src = dataURL;
-  }
+const setDataURL = async (dataURL:string) => {
+  return new Promise((resolve, reject) => {
+    window.requestAnimationFrame(() => {
+      if (!pieceImage.value) {
+        return reject(new Error(`No image in DOM`));
+      }
+      pieceImage.value.src = dataURL;
+      pieceImage.value?.addEventListener('load', (e) => {
+        window.requestAnimationFrame(() => {
+          if (!pieceImage.value) {
+            return reject(new Error(`No image in DOM`));
+          }
+          pieceImage.value.style.visibility = 'visible';
+          return resolve(null);
+        });
+      }, { once: true });
+      pieceImage.value?.addEventListener('error', reject, { once: true });
+    });
+  });
 };
 
-const setPosition = async (x:number, y:number) => {
+const setPosition = async (x:number, y:number):Promise<{x:number, y:number}> => {
   return new Promise((resolve, reject) => {
-    currentX = x;
-    currentY = y;
-    if (!pieceImage.value) {
-      return;
-    }
-    let xDiff = currentX - startX;
-    let yDiff = currentY - startY;
-    let hasResolved = false;
-    pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
-      if (hasResolved) {
+    window.requestAnimationFrame(() => {
+      if (!pieceImage.value) {
         return;
       }
-      hasResolved = true;
-      resolve({
-        x: currentX,
-        y: currentY
-      });
-    }, {
-      once: true
-    });
-    pieceImage.value.style.transform = `translate3d(${xDiff * 100}%, ${yDiff * 100}%, 0)`;
-    setTimeout(() => {
-      if (!hasResolved) {
+      currentX = x;
+      currentY = y;
+      let xDiff = currentX - startX;
+      let yDiff = currentY - startY;
+      let hasResolved = false;
+      pieceImage.value.style.transform = `translate3d(${xDiff * 100}%, ${yDiff * 100}%, 0)`;
+      if (animationEnabled) {
+        pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
+          if (hasResolved) {
+            return;
+          }
+          hasResolved = true;
+          resolve({
+            x: currentX,
+            y: currentY
+          });
+        }, {
+          once: true
+        });
+        setTimeout(() => {
+          if (!hasResolved) {
+            return resolve({
+              x: currentX,
+              y: currentY
+            });
+          }
+        }, 1000);
+      } else {
         return resolve({
           x: currentX,
           y: currentY
         });
       }
-    }, 1000);
+    });
   });
 };
 
@@ -83,39 +109,49 @@ const slide = async (direction:string) => {
 
 const comeTogether = async () => {
   return new Promise((resolve, reject) => {
-    if (!pieceImage.value) {
-      return;
-    }
-    const centerDeltaX = (props.sideLength / 2) - (startX + .5);
-    const centerDeltaY = (props.sideLength / 2) - (startY + .5);
-    const centerHypotenuse = Math.sqrt(Math.pow(centerDeltaX, 2) + Math.pow(centerDeltaY, 2));
-    const centerTheta = Math.atan2(centerDeltaY , centerDeltaX);
-    pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
+    window.requestAnimationFrame(() => {
       if (!pieceImage.value) {
-        return resolve(null);
+        return;
       }
-      pieceImage.value.style.transition = 'transform .1s';
-      let comeTogetherDeltaX = (props.sideLength / 2) - startX * 2 * 2 + 4;
-      let comeTogetherDeltaY = (props.sideLength / 2) - startY * 2 * 2 + 4;
-      pieceImage.value.style.transform = `translate3d(${comeTogetherDeltaX}px, ${comeTogetherDeltaY}px, 0)`;
+      const centerDeltaX = (props.sideLength / 2) - (startX + .5);
+      const centerDeltaY = (props.sideLength / 2) - (startY + .5);
+      const centerHypotenuse = Math.sqrt(Math.pow(centerDeltaX, 2) + Math.pow(centerDeltaY, 2));
+      const centerTheta = Math.atan2(centerDeltaY , centerDeltaX);
       pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
-        resolve(null);
+        window.requestAnimationFrame(() => {
+          if (!pieceImage.value) {
+            return resolve(null);
+          }
+          pieceImage.value.style.transition = 'transform .1s';
+          let comeTogetherDeltaX = (props.sideLength / 2) - startX * 2 * 2 + 4;
+          let comeTogetherDeltaY = (props.sideLength / 2) - startY * 2 * 2 + 4;
+          pieceImage.value.style.transform = `translate3d(${comeTogetherDeltaX}px, ${comeTogetherDeltaY}px, 0)`;
+          pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
+            resolve(null);
+          });
+        });
+      }, {
+        once: true
       });
-    }, {
-      once: true
+      pieceImage.value.style.transition = 'transform .5s';
+      pieceImage.value.style.visibility = 'visible';
+      pieceImage.value.style.transform = `translate3d(${10 * -Math.cos(centerTheta) * Math.pow(centerHypotenuse, 1.5)}px, ${10 * -Math.sin(centerTheta) * Math.pow(centerHypotenuse, 1.5)}px, 0)`;
     });
-    pieceImage.value.style.transition = 'transform .5s';
-    pieceImage.value.style.visibility = 'visible';
-    pieceImage.value.style.transform = `translate3d(${10 * -Math.cos(centerTheta) * Math.pow(centerHypotenuse, 1.5)}px, ${10 * -Math.sin(centerTheta) * Math.pow(centerHypotenuse, 1.5)}px, 0)`;
   });
 };
 
-const enableAnimation = () => {
-  if (!pieceImage.value) {
-    return;
-  }
-  const slideSpeed = .05 * Math.pow(4 / props.sideLength, 2.5);
-  pieceImage.value.style.transition = `transform ${slideSpeed}s`;
+const enableAnimation = async () => {
+  return new Promise((resolve) => {
+    window.requestAnimationFrame(() => {
+      if (!pieceImage.value) {
+        return;
+      }
+      animationEnabled = true;
+      const slideSpeed = .05 * Math.pow(4 / props.sideLength, 2);
+      pieceImage.value.style.transition = `transform ${slideSpeed}s`;
+      return resolve(null);
+    });
+  });
 };
 
 const reset = () => {
@@ -125,6 +161,7 @@ const reset = () => {
   if (props.isEmptySpace) {
     pieceImage.value.style.visibility = 'hidden';
   }
+  animationEnabled = false;
   pieceImage.value.style.transition = '';
 }
 
@@ -159,5 +196,6 @@ defineExpose({
   transform: translate3d(0, 0, 0);
   max-width: 100%;
   padding: 2px;
+  visibility: hidden;
 }
 </style>

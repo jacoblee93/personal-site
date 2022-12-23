@@ -45,11 +45,11 @@ const setPuzzlePieceRefs = (el) => {
   puzzlePieces[el.index] = el;
 };
 
-const shuffle = (moveCount?:number):ShuffledState|undefined => {
+const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
   let moves:PieceMove[] = [];
   let boardStates:number[][] = [[...Array(sideLength * sideLength).keys()]];
   const emptySpaceTile = sideLength * sideLength - 1;
-  const shuffleMoves = moveCount || Math.pow(sideLength - 1, 3);
+  const shuffleMoves = moveCount || (Math.pow(sideLength - 1, 3) + sideLength);
   let emptySpaceTileIndex = sideLength * sideLength - 1;
   for (let i = 0; i < shuffleMoves; i++) {
     let availableMoves:{tile: number, tileIndex: number, direction: string}[] = [];
@@ -108,52 +108,52 @@ const shuffle = (moveCount?:number):ShuffledState|undefined => {
     moves.push(nextMove);
   }
   solved = false;
+  const finalBoardState = boardStates[boardStates.length - 1];
+  await Promise.all(puzzlePieces.map((puzzlePiece, i) => {
+    let setPositionFn;
+    if (finalBoardState[i] === emptySpaceTile) {
+      setPositionFn = puzzlePieces[finalBoardState[i]].setPosition(sideLength - 1, sideLength - 1);
+    } else {
+      setPositionFn = puzzlePieces[finalBoardState[i]].setPosition(i % sideLength, Math.floor(i / sideLength));
+    }
+    return setPositionFn.then(() => puzzlePieces[finalBoardState[i]].enableAnimation());
+  }));
   return {
     moves: moves,
-    boardState: boardStates[boardStates.length - 1]
+    boardState: finalBoardState
   };
 };
 
-const solve = (shuffledState:ShuffledState) => {
-  const emptySpaceTile = sideLength * sideLength - 1;
-  for (let i = 0; i < puzzlePieces.length; i++) {
-    if (shuffledState.boardState[i] === emptySpaceTile) {
-      puzzlePieces[shuffledState.boardState[i]].setPosition(sideLength - 1, sideLength - 1);
+const solve = async (shuffledState:ShuffledState) => {
+  const solutionMoves = shuffledState.moves.map((move) => {
+    let solutionDirection;
+    if (move.direction === 'left') {
+      solutionDirection = 'right';
+    } else if (move.direction === 'right') {
+      solutionDirection = 'left';
+    } else if (move.direction === 'up') {
+      solutionDirection = 'down';
     } else {
-      puzzlePieces[shuffledState.boardState[i]].setPosition(i % sideLength, Math.floor(i / sideLength));
+      solutionDirection = 'up';
     }
-    puzzlePieces[shuffledState.boardState[i]].enableAnimation();
+    return {
+      tile: move.tile,
+      direction: solutionDirection
+    };
+  }).reverse();
+  for (let i = 0; i < solutionMoves.length; i++) {
+    await puzzlePieces[solutionMoves[i].tile].slide(solutionMoves[i].direction);
   }
-  setTimeout(async () => {
-    const solutionMoves = shuffledState.moves.map((move) => {
-      let solutionDirection;
-      if (move.direction === 'left') {
-        solutionDirection = 'right';
-      } else if (move.direction === 'right') {
-        solutionDirection = 'left';
-      } else if (move.direction === 'up') {
-        solutionDirection = 'down';
-      } else {
-        solutionDirection = 'up';
-      }
-      return {
-        tile: move.tile,
-        direction: solutionDirection
-      };
-    }).reverse();
-    for (let i = 0; i < solutionMoves.length; i++) {
-      await puzzlePieces[solutionMoves[i].tile].slide(solutionMoves[i].direction);
-    }
-    await Promise.all(puzzlePieces.map((puzzlePiece) => {
-      return puzzlePiece.comeTogether();
-    }));
-    emit('animationComplete');
-    solved = true;
-    replay.value?.classList.remove('hidden');
-  }, 500);
+  await Promise.all(puzzlePieces.map((puzzlePiece) => {
+    return puzzlePiece.comeTogether();
+  }));
+  emit('animationComplete');
+  solved = true;
+  replay.value?.classList.remove('hidden');
 }
 
-const drawPieceImages = () => {
+const drawPieceImages = async () => {
+  const drawPromises = [];
   const pieceWidth = puzzleImage.width / sideLength;
   const pieceHeight = puzzleImage.height / sideLength;
   for (let x = 0; x < sideLength; x++) {
@@ -165,23 +165,30 @@ const drawPieceImages = () => {
       if (context) {
         context.drawImage(puzzleImage, x * pieceWidth, y * pieceHeight, pieceWidth, pieceHeight, 0, 0, canvas.width, canvas.height);
       }
-      puzzlePieces[y * sideLength + x].setDataURL(canvas.toDataURL());
+      drawPromises.push(puzzlePieces[y * sideLength + x].setDataURL(canvas.toDataURL()));
     }
   }
+  return Promise.all(drawPromises);
 };
 
-const render = () => {
+const render = async () => {
   for (let i = 0; i < puzzlePieces.length; i++) {
     puzzlePieces[i].reset();
   }
-  puzzleImage.onload = () => {
-    drawPieceImages();
-  };
-  const shuffledState = shuffle();
+  await new Promise((resolve) => {
+    puzzleImage.onload = () => {
+      drawPieceImages().then(resolve);
+    };
+  });
+  const shuffledState = await shuffle();
   if (!shuffledState) {
     return;
   }
-  solve(shuffledState);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      solve(shuffledState).then(resolve);
+    }, 500);
+  });
 };
 
 const isSolved = () => {
