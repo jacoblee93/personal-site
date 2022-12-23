@@ -53,13 +53,13 @@ onMounted(() => {
         <p>
           I'm a freelance engineer and consultant based in San Francisco.
           Most recently, I was the Co-founder and CTO of
-          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, a software platform used by over <b>600,000 developers</b>, many of whom were first-time coders.
+          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, a software platform used by <b>600,000+ developers</b>, many of whom were first-time coders.
         </p>
         <p>
           I've architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections and have solved problems around everything from TLS certificate provisioning to real-time text sync.
         </p>
         <p>
-          Before that, I helped launch shared albums and as a frontend engineer on
+          Before that, I helped launch shared albums and commenting as a frontend engineer on
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
         <p ref="midpointCopy">
@@ -136,6 +136,12 @@ a.bio-link {
 @media (max-width: 960px) {
   .bio {
     margin-top: 56px;
+  }
+  .bio p {
+    text-align: left;
+  }
+  .bio h1 {
+    font-size: 36px;
   }
   .pixelme-container {
     min-width: 0;
