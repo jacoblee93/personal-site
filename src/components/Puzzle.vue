@@ -227,7 +227,6 @@ defineExpose({
   flex-direction: column;
   max-width: 480px;
   max-height: 480px;
-  margin: 8px;
   position: relative;
   bottom: 8px;
   user-select: none;

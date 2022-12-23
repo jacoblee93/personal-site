@@ -138,7 +138,6 @@ h3 {
 }
 
 .puzzle-container {
-  width: 480px;
   max-width: 480px;
   max-height: 480px;
 }
@@ -156,10 +155,9 @@ h3 {
     bottom: 0;
   }
   .puzzle-container {
-    width: unset;
+    padding: 24px;
     flex-basis: 55%;
     display: flex;
-    align-items: flex-end;
   }
   .puzzle-container.secret {
     margin-top: 0;

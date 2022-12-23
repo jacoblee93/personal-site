@@ -152,9 +152,8 @@ defineExpose({
 
 <style scoped>
 .puzzle-piece {
+  display: flex;
   position: relative;
-  min-height: 0;
-  aspect-ratio: 1/1;
 }
 .puzzle-piece img {
   transform: translate3d(0, 0, 0);
