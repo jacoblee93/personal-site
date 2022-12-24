@@ -15,6 +15,7 @@ let currentY = startY;
 
 let animationEnabled = false;
 
+const puzzlePiece = ref<HTMLInputElement | null>(null);
 const pieceImage = ref<HTMLInputElement | null>(null);
 
 const setDataURL = async (dataURL:string) => {
@@ -26,11 +27,11 @@ const setDataURL = async (dataURL:string) => {
       pieceImage.value.src = dataURL;
       pieceImage.value?.addEventListener('load', (e) => {
         window.requestAnimationFrame(() => {
-          if (!pieceImage.value) {
+          if (!puzzlePiece.value) {
             return reject(new Error(`No image in DOM`));
           }
           if (!props.isEmptySpace) {
-            pieceImage.value.style.visibility = 'visible';
+            puzzlePiece.value.style.visibility = 'visible';
           }
           return resolve(null);
         });
@@ -43,7 +44,7 @@ const setDataURL = async (dataURL:string) => {
 const setPosition = async (x:number, y:number):Promise<{x:number, y:number}> => {
   return new Promise((resolve, reject) => {
     window.requestAnimationFrame(() => {
-      if (!pieceImage.value) {
+      if (!puzzlePiece.value) {
         return;
       }
       currentX = x;
@@ -51,9 +52,9 @@ const setPosition = async (x:number, y:number):Promise<{x:number, y:number}> => 
       let xDiff = currentX - startX;
       let yDiff = currentY - startY;
       let hasResolved = false;
-      pieceImage.value.style.transform = `translate3d(${xDiff * 100}%, ${yDiff * 100}%, 0)`;
+      puzzlePiece.value.style.transform = `translate3d(${xDiff * 100}%, ${yDiff * 100}%, 0)`;
       if (animationEnabled) {
-        pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
+        puzzlePiece.value.addEventListener(getTransitionEndName(), (e) => {
           if (hasResolved) {
             return;
           }
@@ -112,23 +113,23 @@ const slide = async (direction:string) => {
 const comeTogether = async () => {
   return new Promise((resolve, reject) => {
     window.requestAnimationFrame(() => {
-      if (!pieceImage.value) {
+      if (!puzzlePiece.value) {
         return;
       }
       const centerDeltaX = (props.sideLength / 2) - (startX + .5);
       const centerDeltaY = (props.sideLength / 2) - (startY + .5);
       const centerHypotenuse = Math.sqrt(Math.pow(centerDeltaX, 2) + Math.pow(centerDeltaY, 2));
       const centerTheta = Math.atan2(centerDeltaY , centerDeltaX);
-      pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
+      puzzlePiece.value.addEventListener(getTransitionEndName(), (e) => {
         window.requestAnimationFrame(() => {
-          if (!pieceImage.value) {
+          if (!puzzlePiece.value) {
             return resolve(null);
           }
-          pieceImage.value.style.transition = 'transform .1s';
+          puzzlePiece.value.style.transition = 'transform 100ms ease 100ms';
           let comeTogetherDeltaX = (props.sideLength / 2) - startX * 2 * 2 + 4;
           let comeTogetherDeltaY = (props.sideLength / 2) - startY * 2 * 2 + 4;
-          pieceImage.value.style.transform = `translate3d(${comeTogetherDeltaX}px, ${comeTogetherDeltaY}px, 0)`;
-          pieceImage.value.addEventListener(getTransitionEndName(), (e) => {
+          puzzlePiece.value.style.transform = `translate3d(${comeTogetherDeltaX}px, ${comeTogetherDeltaY}px, 0)`;
+          puzzlePiece.value.addEventListener(getTransitionEndName(), (e) => {
             resolve(null);
           });
         });
@@ -137,9 +138,11 @@ const comeTogether = async () => {
       });
       const translateXPx = Math.floor(10 * -Math.cos(centerTheta) * Math.pow(centerHypotenuse, 1.5));
       const translateYPx = Math.floor(10 * -Math.sin(centerTheta) * Math.pow(centerHypotenuse, 1.5));
-      pieceImage.value.style.transition = 'transform .5s';
-      pieceImage.value.style.visibility = 'visible';
-      pieceImage.value.style.transform = `translate3d(${translateXPx}px, ${translateYPx}px, 0)`;
+      puzzlePiece.value.style.transition = 'transform 500ms ease 100ms';
+      puzzlePiece.value.style.transform = `translate3d(${translateXPx}px, ${translateYPx}px, 0)`;
+      if (props.isEmptySpace) {
+        puzzlePiece.value.style.visibility = 'visible';
+      }
     });
   });
 };
@@ -147,26 +150,26 @@ const comeTogether = async () => {
 const enableAnimation = async () => {
   return new Promise((resolve) => {
     window.requestAnimationFrame(() => {
-      if (!pieceImage.value) {
+      if (!puzzlePiece.value) {
         return;
       }
       animationEnabled = true;
-      const slideSpeed = .05 * Math.pow(4 / props.sideLength, 2);
-      pieceImage.value.style.transition = `transform ${slideSpeed}s`;
+      const slideSpeed = 50 * Math.pow(4 / props.sideLength, 2);
+      puzzlePiece.value.style.transition = `transform ${slideSpeed}ms linear`;
       return resolve(null);
     });
   });
 };
 
 const reset = () => {
-  if (!pieceImage.value) {
+  if (!puzzlePiece.value) {
     return;
   }
   if (props.isEmptySpace) {
-    pieceImage.value.style.visibility = 'hidden';
+    puzzlePiece.value.style.visibility = 'hidden';
   }
   animationEnabled = false;
-  pieceImage.value.style.transition = '';
+  puzzlePiece.value.style.transition = '';
 }
 
 onMounted(() => {
@@ -186,7 +189,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="puzzle-piece">
+  <div ref="puzzlePiece" class="puzzle-piece">
     <img ref="pieceImage" />
   </div>
 </template>
@@ -195,12 +198,12 @@ defineExpose({
 .puzzle-piece {
   display: flex;
   position: relative;
+  transform: translate3d(0, 0, 0);
+  will-change: transition, transform;
+  visibility: hidden;
 }
 .puzzle-piece img {
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
   max-width: 100%;
   padding: 2px;
-  visibility: hidden;
 }
 </style>
