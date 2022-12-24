@@ -138,7 +138,7 @@ const comeTogether = async () => {
       });
       const translateXPx = Math.floor(12 * -Math.cos(centerTheta) * Math.pow(centerHypotenuse, 1.5));
       const translateYPx = Math.floor(12 * -Math.sin(centerTheta) * Math.pow(centerHypotenuse, 1.5));
-      puzzlePiece.value.style.transition = 'transform 500ms ease 100ms';
+      puzzlePiece.value.style.transition = 'transform 500ms ease';
       puzzlePiece.value.style.transform = `translate3d(${translateXPx}px, ${translateYPx}px, 0)`;
       if (props.isEmptySpace) {
         puzzlePiece.value.style.visibility = 'visible';
