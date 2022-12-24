@@ -51,12 +51,12 @@ onMounted(() => {
           👋 Nice to meet you!
         </h1>
         <p>
-          I'm a freelance engineer and consultant based in San Francisco.
-          Most recently, I was the Co-founder and CTO of
-          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, a software platform used by <b>600,000+ developers</b>, many of whom were first-time coders.
+          I'm an engineer and consultant based in San Francisco.
+          Most recently, I was Co-founder and CTO of
+          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online editor and serverless hosting platform used by <b>600,000+ developers</b>, including many first-time coders.
         </p>
         <p>
-          I've architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections and have solved problems around everything from TLS certificate provisioning to real-time text sync.
+          While building and running an at-scale, general-use platform, we ran into technical challenges ranging from TLS certificate provisioning to DDoS attacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections.
         </p>
         <p>
           Before that, I helped launch shared albums and commenting as a frontend engineer on
@@ -70,7 +70,7 @@ onMounted(() => {
           If you could use my expertise or a steady hand on your next project, reach out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
           <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
-          or <a target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a> and let's talk!
+          or <a class="bio-link" target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a> and let's talk!
         </p>
         <!-- <img class="minime" ref="minime" src="/static/mini-jacob.gif" /> -->
       </div>
