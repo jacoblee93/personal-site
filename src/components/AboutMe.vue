@@ -3,7 +3,7 @@ import { ref, onMounted, inject } from 'vue';
 const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:boolean) => boolean;
 const minime = ref<HTMLElement | null>(null);
 const pixelmeContainer = ref<HTMLElement | null>(null);
-const midpointCopy = ref<HTMLElement | null>(null);
+const lastParagraph = ref<HTMLElement | null>(null);
 
 const minimeFrames = 6;
 let minimePosition = 0;
@@ -21,7 +21,7 @@ onMounted(() => {
     return;
   }
   const typingCheck = () => {
-    if (midpointCopy.value && isInViewport(midpointCopy.value, true)) {
+    if (lastParagraph.value && isInViewport(lastParagraph.value, true)) {
       appEl.removeEventListener('scroll', typingCheck);
       setTimeout(() => {
         if (!pixelmeContainer.value) {
@@ -62,11 +62,11 @@ onMounted(() => {
           Before that, I helped launch shared albums and commenting as a frontend engineer on
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
-        <p ref="midpointCopy">
+        <p>
           My strengths are backend development, devops, and cloud architecture, but I consider myself "<a href="https://en.wikipedia.org/wiki/T-shaped_skills" target="_blank">t-shaped</a>" and embrace the challenge of solving problems anywhere in a stack and a company.
           I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>, and know my way around a cap table.
         </p>
-        <p>
+        <p ref="lastParagraph">
           If you could use my expertise or a steady hand on your next project, reach out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
           <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
