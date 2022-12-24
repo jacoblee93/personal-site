@@ -29,7 +29,9 @@ const setDataURL = async (dataURL:string) => {
           if (!pieceImage.value) {
             return reject(new Error(`No image in DOM`));
           }
-          pieceImage.value.style.visibility = 'visible';
+          if (!props.isEmptySpace) {
+            pieceImage.value.style.visibility = 'visible';
+          }
           return resolve(null);
         });
       }, { once: true });
@@ -133,9 +135,11 @@ const comeTogether = async () => {
       }, {
         once: true
       });
+      const translateXPx = Math.floor(10 * -Math.cos(centerTheta) * Math.pow(centerHypotenuse, 1.5));
+      const translateYPx = Math.floor(10 * -Math.sin(centerTheta) * Math.pow(centerHypotenuse, 1.5));
       pieceImage.value.style.transition = 'transform .5s';
       pieceImage.value.style.visibility = 'visible';
-      pieceImage.value.style.transform = `translate3d(${10 * -Math.cos(centerTheta) * Math.pow(centerHypotenuse, 1.5)}px, ${10 * -Math.sin(centerTheta) * Math.pow(centerHypotenuse, 1.5)}px, 0)`;
+      pieceImage.value.style.transform = `translate3d(${translateXPx}px, ${translateYPx}px, 0)`;
     });
   });
 };
@@ -194,6 +198,7 @@ defineExpose({
 }
 .puzzle-piece img {
   transform: translate3d(0, 0, 0);
+  will-change: transform;
   max-width: 100%;
   padding: 2px;
   visibility: hidden;
