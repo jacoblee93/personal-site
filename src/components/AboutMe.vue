@@ -56,7 +56,7 @@ onMounted(() => {
           <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online editor and serverless hosting platform used by <b>600,000+ developers</b>, including many first-time coders.
         </p>
         <p>
-          While building and running an at-scale, general-use platform, we ran into technical challenges ranging from TLS certificate provisioning to DDoS attacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections.
+          As an at-scale, general-use platform, we faced technical challenges that ranged from request tracing and billing to cyberattacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections.
         </p>
         <p>
           Before that, I helped launch shared albums and commenting as a frontend engineer on
