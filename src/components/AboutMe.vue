@@ -70,7 +70,7 @@ onMounted(() => {
           If you could use my expertise or a steady hand on your next project, reach out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
           <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
-          or <a href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a> and let's talk!
+          or <a target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a> and let's talk!
         </p>
         <!-- <img class="minime" ref="minime" src="/static/mini-jacob.gif" /> -->
       </div>
