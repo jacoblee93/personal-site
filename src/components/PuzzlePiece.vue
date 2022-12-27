@@ -8,6 +8,8 @@ const props = defineProps<{
   isEmptySpace: boolean
 }>();
 
+const baseSlideSpeed = window.innerWidth > 960 ? 40 : 30;
+
 let startX = props.index % props.sideLength;
 let startY = Math.floor(props.index / props.sideLength);
 let currentX = startX;
@@ -154,7 +156,7 @@ const enableAnimation = async () => {
         return;
       }
       animationEnabled = true;
-      const slideSpeed = Math.round(40 * Math.pow(4 / props.sideLength, 2));
+      const slideSpeed = Math.round(baseSlideSpeed * Math.pow(4 / props.sideLength, 2));
       puzzlePiece.value.style.transition = `transform ${slideSpeed}ms linear`;
       return resolve(null);
     });

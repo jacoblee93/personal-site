@@ -204,8 +204,8 @@ const wantsMoar = () => {
   }
 };
 
-onMounted(() => {
-  render();
+onMounted(async () => {
+  await render();
 });
 
 defineExpose({
