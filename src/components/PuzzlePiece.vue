@@ -154,7 +154,7 @@ const enableAnimation = async () => {
         return;
       }
       animationEnabled = true;
-      const slideSpeed = 50 * Math.pow(4 / props.sideLength, 2);
+      const slideSpeed = Math.round(40 * Math.pow(4 / props.sideLength, 2));
       puzzlePiece.value.style.transition = `transform ${slideSpeed}ms linear`;
       return resolve(null);
     });

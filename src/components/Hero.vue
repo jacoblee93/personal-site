@@ -96,7 +96,8 @@ const giveEmMoar = () => {
     <div ref="content" class="content">
       <div ref="mainHeaders" class="main-headers">
         <h1>Jacob Lee</h1>
-        <h3>Fractional CTO</h3>
+        <h3>Software Architect</h3>
+        <!-- <h3>&amp; Consultant</h3> -->
         <h3 ref="secondary" class="secondary-title hidden">&amp; Problem Solver</h3>
       </div>
       <div class="puzzle-container secret hidden" ref="secretPuzzleContainer">
@@ -113,7 +114,7 @@ const giveEmMoar = () => {
 .hero .content {
   display: flex;
   width: 100%;
-  color: var(--white);
+  color: var(--color-white);
 }
 
 h3 {
@@ -134,7 +135,7 @@ h3 {
 }
 
 .secondary-title.hidden {
-  opacity: .15;
+  opacity: .1;
 }
 
 .puzzle-container {

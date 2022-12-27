@@ -41,40 +41,6 @@ header {
   max-height: 100vh;
 }
 
-nav {
-  background-color: var(--white);
-  width: 100%;
-  text-align: center;
-  padding: 1rem 0;
-  text-align: left;
-  top: 0;
-  position: sticky;
-  z-index: 1;
-}
-
-nav.scrolled {
-  border-bottom: 1px solid grey;
-  box-shadow: var(--box-shadow);
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
 @media (min-width: 1024px) {
   header {
     display: flex;

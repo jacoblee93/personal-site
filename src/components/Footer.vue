@@ -10,7 +10,7 @@ import { ref, onMounted, inject } from 'vue';
 
 <style scoped>
 .footer {
-  color: var(--white);
+  color: var(--color-white);
   height: 96px;
   display: flex;
   align-items: center;

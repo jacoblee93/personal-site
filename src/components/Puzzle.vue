@@ -34,6 +34,7 @@ const sideLength = props.sideLength || 4;
 const puzzleImage = new Image();
 puzzleImage.src = props.imageUrl;
 
+const puzzleWrapper = ref<HTMLElement | null>(null);
 const replay = ref<HTMLElement | null>(null);
 const puzzlePieces: typeof PuzzlePiece[] = Array(sideLength * sideLength);
 
@@ -49,7 +50,7 @@ const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
   let moves:PieceMove[] = [];
   let boardStates:number[][] = [[...Array(sideLength * sideLength).keys()]];
   const emptySpaceTile = sideLength * sideLength - 1;
-  const shuffleMoves = moveCount || (Math.pow(sideLength - 1, 3) + sideLength);
+  const shuffleMoves = moveCount || (Math.pow(sideLength - 1, 3) + Math.pow(sideLength - 1, 2)) + sideLength;
   let emptySpaceTileIndex = sideLength * sideLength - 1;
   for (let i = 0; i < shuffleMoves; i++) {
     let availableMoves:{tile: number, tileIndex: number, direction: string}[] = [];
@@ -108,6 +109,7 @@ const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
     moves.push(nextMove);
   }
   solved = false;
+  puzzleWrapper.value?.classList.remove('solved');
   const finalBoardState = boardStates[boardStates.length - 1];
   await Promise.all(puzzlePieces.map((puzzlePiece, i) => {
     let setPositionFn;
@@ -149,6 +151,7 @@ const solve = async (shuffledState:ShuffledState) => {
   }));
   emit('animationComplete');
   solved = true;
+  puzzleWrapper.value?.classList.add('solved');
   replay.value?.classList.remove('hidden');
 }
 
@@ -213,11 +216,11 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="puzzle-wrapper" class="puzzle-wrapper">
+  <div ref="puzzleWrapper" class="puzzle-wrapper" @mouseup="wantsMoar">
     <i ref="replay" class="replay hidden" v-html="
       // @ts-ignore
       feather.icons['rotate-ccw'].toSvg()
-    " @mouseup="wantsMoar"></i>
+    "></i>
     <div v-for="y in sideLength" :key="y" class="puzzle-row">
       <PuzzlePiece v-for="x in sideLength" :key="x" :ref="setPuzzlePieceRefs"
         :index="(y - 1) * sideLength + (x - 1)"
@@ -238,12 +241,16 @@ defineExpose({
   bottom: 8px;
   user-select: none;
 }
+
+.puzzle-wrapper.solved {
+  cursor: pointer;
+}
+
 .puzzle-row {
   display: flex;
   min-height: 0;
 }
 .replay {
-  cursor: pointer;
   opacity: .5;
   color: #AAAAAA;
   position: absolute;

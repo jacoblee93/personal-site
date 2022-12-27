@@ -53,7 +53,7 @@ onMounted(() => {
         <p>
           I'm an engineer and consultant based in San Francisco.
           Most recently, I was Co-founder and CTO of
-          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online editor and serverless hosting platform used by <b>600,000+ developers</b>, including many first-time coders.
+          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online code editor and serverless platform with <b>600,000+ developers</b>, many of whom were new to software.
         </p>
         <p>
           As an at-scale, general-use platform, we faced technical challenges that ranged from request tracing and billing to cyberattacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections.
@@ -67,7 +67,7 @@ onMounted(() => {
           I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>, and know my way around a cap table.
         </p>
         <p ref="lastParagraph">
-          If you could use my expertise or a steady hand on your next project, reach out to me on
+          If you could use my expertise, fractional CTO help, or just a steady hand on your next project, reach out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
           <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
           or <a class="bio-link" target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a> and let's talk!
@@ -80,10 +80,10 @@ onMounted(() => {
 
 <style scoped>
 .about-me {
-  background-color: var(--white);
+  background-color: var(--color-white);
 }
 .about-me p {
-  color: var(--black);
+  color: var(--color-black);
 }
 .pixelme {
   position: absolute;
@@ -116,7 +116,9 @@ onMounted(() => {
 }
 img.inline-logo {
   height: 12px;
-  margin-right: 2px;
+  margin-right: 3px;
+  position: relative;
+  top: 1px;
 }
 img.minime {
   height: 240px;

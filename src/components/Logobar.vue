@@ -97,7 +97,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   padding: 4px 0;
-  background-color: var(--white);
+  background-color: var(--color-white);
 }
 
 .description {
