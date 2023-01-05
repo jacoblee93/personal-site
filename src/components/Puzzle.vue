@@ -46,6 +46,18 @@ const setPuzzlePieceRefs = (el) => {
   puzzlePieces[el.index] = el;
 };
 
+const shuffleArray = (array:any[]) => {
+  let shuffledMoves = array.map(el => el);
+  let currentIndex = shuffledMoves.length;
+  let randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [shuffledMoves[currentIndex], shuffledMoves[randomIndex]] = [shuffledMoves[randomIndex], shuffledMoves[currentIndex]];
+  }
+  return shuffledMoves;
+}
+
 const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
   let moves:PieceMove[] = [];
   let boardStates:number[][] = [[...Array(sideLength * sideLength).keys()]];
@@ -53,7 +65,7 @@ const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
   const shuffleMoves = moveCount || (Math.pow(sideLength - 1, 3) + Math.pow(sideLength - 1, 2)) + sideLength;
   let emptySpaceTileIndex = sideLength * sideLength - 1;
   for (let i = 0; i < shuffleMoves; i++) {
-    let availableMoves:{tile: number, tileIndex: number, direction: string}[] = [];
+    let availableMoves:PieceMove[] = [];
     let emptySpaceX = emptySpaceTileIndex % sideLength;
     let emptySpaceY = Math.floor(emptySpaceTileIndex / sideLength);
     let currentBoardState = boardStates[i];
@@ -86,13 +98,11 @@ const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
       });
     }
     let identicalState:number[] | undefined;
-    let nextMove:PieceMove;
-    let newBoardState:number[];
-    do {
-      nextMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-      if (!nextMove) {
-        return;
-      }
+    let nextMove:PieceMove | undefined;
+    let newBoardState:number[] | undefined;
+    let shuffledAvailableMoves:PieceMove[] = shuffleArray(availableMoves);
+    for (let j = 0; j < shuffledAvailableMoves.length; j++) {
+      nextMove = shuffledAvailableMoves[j];
       newBoardState = boardStates[i].map((index) => {
         return index;
       });
@@ -100,12 +110,20 @@ const shuffle = async (moveCount?:number):Promise<ShuffledState|undefined> => {
       newBoardState[emptySpaceTileIndex] = nextMove.tile;
       identicalState = boardStates.find((oldState) => {
         return !oldState.find((el, i) => {
-          return el !== newBoardState[i];
+          return newBoardState && el !== newBoardState[i];
         });
       });
-    } while (!!identicalState && availableMoves.length);
+      if (!identicalState) {
+        break;
+      }
+      nextMove = undefined;
+      newBoardState = undefined;
+    }
+    if (!nextMove) {
+      break;
+    }
     emptySpaceTileIndex = nextMove.tileIndex || 0;
-    boardStates.push(newBoardState);
+    newBoardState && boardStates.push(newBoardState);
     moves.push(nextMove);
   }
   solved = false;
