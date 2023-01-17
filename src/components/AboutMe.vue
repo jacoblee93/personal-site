@@ -51,7 +51,7 @@ onMounted(() => {
           👋 Nice to meet you!
         </h1>
         <p>
-          I'm an engineer and consultant based in San Francisco.
+          I'm a software engineer based in San Francisco.
           Most recently, I was Co-founder and CTO of
           <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online code editor and serverless platform with <b>600,000+ developers</b>, many of whom were new to software.
         </p>
