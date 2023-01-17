@@ -5,21 +5,13 @@ const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:bo
 const logos = ref<HTMLElement[] | null>(null);
 const logobar = ref<HTMLElement | null>(null);
 const logoData = [{
-  name: 'ramp',
-  logoUrl: '/static/wordmarks/ramp.png',
-  linkUrl: 'https://ramp.com/'
-}, {
   name: 'discord',
   logoUrl: '/static/wordmarks/discord.png',
   linkUrl: 'https://discord.com/'
 }, {
-  name: 'thehill',
-  logoUrl: '/static/wordmarks/thehill.png',
-  linkUrl: 'https://thehill.com/'
-}, {
-  name: 'backbone',
-  logoUrl: '/static/wordmarks/backbone.png',
-  linkUrl: 'https://playbackbone.com/'
+  name: 'bushards',
+  logoUrl: '/static/wordmarks/bushards.svg',
+  linkUrl: 'https://bushardspharmacy.com/'
 }, {
   name: 'webflow',
   logoUrl: '/static/wordmarks/webflow.png',
@@ -29,26 +21,34 @@ const logoData = [{
   logoUrl: '/static/wordmarks/slack.png',
   linkUrl: 'https://slack.com/fund/'
 }, {
+  name: 'lastfrontiermedia',
+  logoUrl: '/static/wordmarks/last-frontier-media.svg',
+  linkUrl: 'https://www.lastfrontiermedia.com/'
+}, {
+  name: 'backbone',
+  logoUrl: '/static/wordmarks/backbone.png',
+  linkUrl: 'https://playbackbone.com/'
+}, {
   name: 'shopify',
   logoUrl: '/static/wordmarks/shopify.png',
   linkUrl: 'https://shopify.com/'
+}, {
+  name: 'thehill',
+  logoUrl: '/static/wordmarks/thehill.png',
+  linkUrl: 'https://thehill.com/'
 }, {
   name: 'stripe',
   logoUrl: '/static/wordmarks/stripe.png',
   linkUrl: 'https://stripe.com/'
 }, {
-  name: 'customer-io',
-  logoUrl: '/static/wordmarks/customer-io.png',
-  linkUrl: 'https://customer.io/'
+  name: 'kotn',
+  logoUrl: '/static/wordmarks/kotn.png',
+  linkUrl: 'https://kotn.com/'
 }, {
   name: 'blueyard',
   logoUrl: '/static/wordmarks/blueyard.svg',
   linkUrl: 'https://blueyard.com/',
   imgClasses: 'blueyard'
-}, {
-  name: 'nylas',
-  logoUrl: '/static/wordmarks/nylas.png',
-  linkUrl: 'https://nylas.com/'
 }];
 
 onMounted(() => {
