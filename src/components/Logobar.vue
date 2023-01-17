@@ -13,9 +13,9 @@ const logoData = [{
   logoUrl: '/static/wordmarks/bushards.svg',
   linkUrl: 'https://bushardspharmacy.com/'
 }, {
-  name: 'webflow',
-  logoUrl: '/static/wordmarks/webflow.png',
-  linkUrl: 'https://webflow.com/'
+  name: 'stripe',
+  logoUrl: '/static/wordmarks/stripe.png',
+  linkUrl: 'https://stripe.com/'
 }, {
   name: 'slack',
   logoUrl: '/static/wordmarks/slack.png',
@@ -37,9 +37,9 @@ const logoData = [{
   logoUrl: '/static/wordmarks/thehill.png',
   linkUrl: 'https://thehill.com/'
 }, {
-  name: 'stripe',
-  logoUrl: '/static/wordmarks/stripe.png',
-  linkUrl: 'https://stripe.com/'
+  name: 'webflow',
+  logoUrl: '/static/wordmarks/webflow.png',
+  linkUrl: 'https://webflow.com/'
 }, {
   name: 'kotn',
   logoUrl: '/static/wordmarks/kotn.png',
