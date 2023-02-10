@@ -54,6 +54,7 @@ onMounted(() => {
           I'm a software engineer based in San Francisco.
           Most recently, I was Co-founder and CTO of
           <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online code editor and serverless platform with <b>600,000+ developers</b>, many of whom were new to software.
+          I've been writing about what I've been up to post-Autocode on <a class="bio-link" target="_blank" href="https://blog.jacobscript.dev/">my blog</a>.
         </p>
         <p>
           As an at-scale, general-use platform, we faced technical challenges that ranged from request tracing and billing to cyberattacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections.
@@ -63,8 +64,8 @@ onMounted(() => {
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
         <p>
-          My strengths are backend development, devops, and cloud architecture, but I consider myself "<a href="https://en.wikipedia.org/wiki/T-shaped_skills" target="_blank">t-shaped</a>" and embrace the challenge of solving problems anywhere in a stack and a company.
-          I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>, and know my way around a cap table.
+          My strengths are backend development, devops, and cloud architecture, but I embrace the challenge of solving problems anywhere in a stack and a company.
+          I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>.
         </p>
         <p ref="lastParagraph">
           If you could use my expertise, fractional CTO help, or just a steady hand on your next project, reach out to me on
