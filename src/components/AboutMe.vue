@@ -54,10 +54,9 @@ onMounted(() => {
           I'm a software engineer based in San Francisco.
           Most recently, I was Co-founder and CTO of
           <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online code editor and serverless platform with <b>600,000+ developers</b>, many of whom were new to software.
-          I've been writing about what I've been up to post-Autocode on <a class="bio-link" target="_blank" href="https://blog.jacobscript.dev/">my blog</a>.
         </p>
         <p>
-          As an at-scale, general-use platform, we faced technical challenges that ranged from request tracing and billing to cyberattacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests per day and <b>hundreds of thousands</b> of concurrent socket connections.
+          As an at-scale, general-use platform, we faced technical challenges ranging from request tracing and billing to cyberattacks to real-time text sync. To solve them, I architected, built, and scaled infrastructure that served <b>hundreds of millions</b> of user API requests/day and <b>hundreds of thousands</b> of concurrent socket connections.
         </p>
         <p>
           Before that, I helped launch shared albums and commenting as a frontend engineer on
@@ -67,6 +66,17 @@ onMounted(() => {
           My strengths are backend development, devops, and cloud architecture, but I embrace the challenge of solving problems anywhere in a stack and a company.
           I've led small teams, moderated and provided support for a <b>40,000 member Discord community</b>.
         </p>
+        <p>
+          A few things I've been up to lately:
+          <ul>
+            <li>
+              <a class="bio-link" target="_blank" href="https://shakespearesays.app/">Shakespeare Says</a>, a chatbot that lets you ask some of history's greatest minds anything!
+            </li>
+            <li>
+              <a class="bio-link" target="_blank" href="https://blog.jacobscript.dev/">My blog</a>, where I've been writing about what I've been up to.
+            </li>
+          </ul>
+        </p>
         <p ref="lastParagraph">
           If you could use my expertise, fractional CTO help, or just a steady hand on your next project, reach out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
@@ -74,7 +84,7 @@ onMounted(() => {
           or <a class="bio-link" target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a> and let's talk!
         </p>
         <!-- <img class="minime" ref="minime" src="/static/mini-jacob.gif" /> -->
-      </div>
+        </div>
     </div>
   </section>
 </template>
