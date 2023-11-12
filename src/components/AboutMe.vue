@@ -52,7 +52,7 @@ onMounted(() => {
         </h1>
         <p>
           I'm a software engineer based in San Francisco.
-          I maintain <a class="bio-link" target="_blank" href="https://github.com/hwchase17/langchainjs/">🦜🔗 LangChain.js</a>, a popular framework for building complex apps with LLMs.
+          I maintain <a class="bio-link" target="_blank" href="https://github.com/langchain-ai/langchainjs/">🦜🔗 LangChain.js</a>, a popular framework for building context-aware apps with LLMs.
         </p>
         <p>
           Previously, I was the co-founder and CTO of
@@ -64,27 +64,16 @@ onMounted(() => {
         </p>
         <p>
           My strengths are OSS, backend development, devops, and cloud architecture, but I embrace the challenge of solving problems anywhere in a stack and a company.
-          I've led small teams, spoken at conferences and meetups, and moderated and provided support for a <b>40,000 member Discord community</b>.
+          I've led small teams, spoken at <a class="bio-link" target="_blank" href="https://www.youtube.com/watch?v=-1sdWLr3TbI">conferences and meetups</a>, and moderated and provided support for a <b>40,000 member Discord community</b>.
         </p>
         <p>
-          A few things I've been up to lately:
-          <ul>
-            <li>
-              <a class="bio-link" target="_blank" href="https://shakespearesays.app/">BicameralGPT</a>, an experimental, personalized generative agent trained on your journal entries.
-            </li>
-            <li>
-              <a class="bio-link" target="_blank" href="https://shakespearesays.app/">Shakespeare Says</a>, a chatbot that lets you ask some of history's greatest minds anything!
-            </li>
-            <li>
-              <a class="bio-link" target="_blank" href="https://blog.jacobscript.dev/">My blog</a>, where I've been writing about what I've been up to.
-            </li>
-          </ul>
+          Check out my <a class="bio-link" target="_blank" href="https://github.com/jacoblee93/"><img class="inline-logo" src="/static/logos/github.png" />GitHub</a> for a sample of what I've been working on lately!
         </p>
         <p ref="lastParagraph">
-          Reach out to me on
+          And feel free to out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
           <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
-          or <a class="bio-link" target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a>!
+          or <a class="bio-link" target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a>.
         </p>
         <!-- <img class="minime" ref="minime" src="/static/mini-jacob.gif" /> -->
         </div>
