@@ -58,7 +58,7 @@ const giveEmMoar = () => {
               // @ts-ignore
               return h(Puzzle, {
                 sideLength: selectedPuzzleData.sideLength,
-                imageUrl: selectedPuzzleData.secretImageUrl,
+                imageUrl: selectedPuzzleData.secretImageUrl ?? "",
                 onWantsMoar: giveEmMoar
               });
             }
