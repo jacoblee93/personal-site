@@ -31,7 +31,7 @@ onMounted(() => {
 <template>
   <Hero />
   <AboutMe />
-  <Logobar />
+  <!-- <Logobar /> -->
   <Footer />
 </template>
 

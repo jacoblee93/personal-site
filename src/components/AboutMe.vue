@@ -55,16 +55,15 @@ onMounted(() => {
           I maintain <a class="bio-link" target="_blank" href="https://github.com/langchain-ai/langchainjs/">🦜🔗 LangChain.js</a>, a popular framework for building context-aware apps with LLMs.
         </p>
         <p>
-          Previously, I was the co-founder and CTO of
-          <a class="bio-link" target="_blank" href="https://autocode.com/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online code editor and serverless platform with <b>600,000+ developers</b>, many of whom were new to software.
+          Previously, I was the co-founder and CTO of a startup called
+          <a class="bio-link" target="_blank" href="https://www.crunchbase.com/organization/stdlib/"><img class="inline-logo" src="/static/logos/autocode.png" />Autocode</a>, an online code editor and serverless platform.
         </p>
         <p>
           Before that, I helped launch shared albums and commenting as a frontend engineer on
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
         <p>
-          My strengths are OSS, backend development, devops, and cloud architecture, but I embrace the challenge of solving problems anywhere in a stack and a company.
-          I've led small teams, spoken at <a class="bio-link" target="_blank" href="https://www.youtube.com/watch?v=-1sdWLr3TbI">conferences and meetups</a>, and moderated and provided support for a <b>40,000 member Discord community</b>.
+          I'm passionate about <a class="bio-link" target="_blank" href="https://github.com/jacoblee93/fully-local-pdf-chatbot">local LLMs</a>, building communities, and developer experience.
         </p>
         <p>
           Check out my <a class="bio-link" target="_blank" href="https://github.com/jacoblee93/"><img class="inline-logo" src="/static/logos/github.png" />GitHub</a> for a sample of what I've been working on lately!
