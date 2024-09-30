@@ -96,7 +96,7 @@ const giveEmMoar = () => {
     <div ref="content" class="content">
       <div ref="mainHeaders" class="main-headers">
         <h1>Jacob Lee</h1>
-        <h3>Software Architect</h3>
+        <h3>Software Engineer</h3>
         <h3 ref="secondary" class="secondary-title hidden">&amp; Problem Solver</h3>
       </div>
       <div class="puzzle-container secret hidden" ref="secretPuzzleContainer">

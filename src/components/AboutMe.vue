@@ -1,21 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
 const isInViewport = inject('isInViewport') as (el:HTMLElement, fullyVisible?:boolean) => boolean;
-const minime = ref<HTMLElement | null>(null);
 const pixelmeContainer = ref<HTMLElement | null>(null);
 const lastParagraph = ref<HTMLElement | null>(null);
 
-const minimeFrames = 6;
-let minimePosition = 0;
 
 onMounted(() => {
-  // setInterval(() => {
-  //   if (!minime.value) {
-  //     return;
-  //   }
-  //   minime.value.style.objectPosition = `-${180 * minimePosition}px 0`;
-  //   minimePosition = (minimePosition + 1) % minimeFrames;
-  // }, 1000);
   const appEl = document.querySelector('#app');
   if (!appEl) {
     return;
@@ -52,7 +42,7 @@ onMounted(() => {
         </h1>
         <p>
           I'm a software engineer based in San Francisco.
-          I maintain <a class="bio-link" target="_blank" href="https://github.com/langchain-ai/langchainjs/">🦜🔗 LangChain.js</a>, a popular framework for building context-aware apps with LLMs.
+          I maintain <a class="bio-link" target="_blank" href="https://github.com/langchain-ai/langgraphjs/">🦜🔗 LangGraph.js</a> and <a class="bio-link" target="_blank" href="https://github.com/langchain-ai/langchainjs/">🦜🔗 LangChain.js</a>, popular frameworks for building with LLMs.
         </p>
         <p>
           Previously, I was the co-founder and CTO of a startup called
@@ -63,13 +53,13 @@ onMounted(() => {
           <a class="bio-link" target="_blank" href="https://photos.google.com"><img class="inline-logo" src="/static/logos/google-photos.png" />Google Photos</a>.
         </p>
         <p>
-          I'm passionate about <a class="bio-link" target="_blank" href="https://github.com/jacoblee93/fully-local-pdf-chatbot">local LLMs</a>, building communities, and developer experience.
+          I'm passionate about <a class="bio-link" target="_blank" href="https://github.com/jacoblee93/fully-local-pdf-chatbot">local LLMs</a>, community building, and developer experience.
         </p>
         <p>
           Check out my <a class="bio-link" target="_blank" href="https://github.com/jacoblee93/"><img class="inline-logo" src="/static/logos/github.png" />GitHub</a> for a sample of what I've been working on lately!
         </p>
         <p ref="lastParagraph">
-          And feel free to out to me on
+          And feel free to reach out to me on
           <a class="bio-link" target="_blank" href="https://www.linkedin.com/in/jacoblee93/"><img class="inline-logo" src="/static/logos/linkedin.png" />LinkedIn</a>,
           <a class="bio-link" target="_blank" href="https://twitter.com/hacubu/"><img class="inline-logo" src="/static/logos/twitter.png" />Twitter</a>,
           or <a class="bio-link" target="_blank" href="/static/docs/Jacob_Lee_Resume_2023.pdf">via the email within my resume</a>.

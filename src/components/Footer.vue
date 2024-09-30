@@ -1,10 +1,6 @@
-<script setup lang="ts">
-import { ref, onMounted, inject } from 'vue';
-</script>
-
 <template>
   <footer class="footer">
-    <span class="copyright">© Jacob Lee, 2023</span>
+    <span class="copyright">© Jacob Lee, 2024</span>
   </footer>
 </template>
 

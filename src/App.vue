@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import Hero from './components/Hero.vue'
 import AboutMe from './components/AboutMe.vue'
-import Logobar from './components/Logobar.vue'
 import Footer from './components/Footer.vue'
 
 const navbar = ref<HTMLElement | null>(null);
@@ -31,7 +30,6 @@ onMounted(() => {
 <template>
   <Hero />
   <AboutMe />
-  <!-- <Logobar /> -->
   <Footer />
 </template>
 
